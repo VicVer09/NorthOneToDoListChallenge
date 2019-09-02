@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+
+{% load static %}
+
+{% block title %} | Index {% endblock %}
+
+{% block content %}
+
+  <!-- Showcase -->
+  
+  <section id="showcase">
+    <div class="container text-center">
+      <div class="home-search p-5">
+        <div class="overlay p-5">
+          
+          <h1 class="display-1 mb-1" style=font-size:80px>
+            NorthOne
+          </h1>
+          <h2 class="display-9 mb-5">
+            To Do List Challenge
+          </h5>
+          <div class="search">
+            <form action="{% url 'search'%}">
+             
+              <div class="form-row">
+                <div class="col-md-4">
+                  <label class="sr-only">Keywords</label>
+                  <input type="text" name="keywords" class="form-control" placeholder="Groceries, Laundry, etc...">
+                </div>
+
+                <div class="col-md-4">
+                  <label class="sr-only">Tags</label>
+                  <input type="text" name="tags" class="form-control" placeholder="Personal, Work, etc...">
+                </div>
+
+                <div class="col-md-4">
+                  <label class="sr-only">Status</label>
+                  <select name="status" class="form-control">
+                    <option selected="true" disabled="disabled">Type (All)</option>
+                    <option value="Completed">Completed</option>
+                    <option value="ToBeCompleted">To be completed</option> 
+                  </select>
+                </div>
+              </div>
+                
+              <div class="form-row"> 
+                <div class="col-md-6">
+                  <button class="btn btn-secondary btn-block mt-2" type="submit">Search</button>
+                </div> 
+            </form>
+             
+                <div class="col-md-6">
+                <form action="{% url 'items'%}">
+                    <input class="btn btn-secondary btn-block mt-2" type="submit" value="View All" />
+                </form>
+                </div>
+              </div>
+            
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </section> 
+
+  <!-- Listings -->
+  <section id="listings" class="py-5">
+    <div class="container">
+      <h3 class="text-center mb-3">To Be Completed</h3>
+      <div class="row">
+        {% if items %}
+        
+          {% for item in items %}
+          
+            <div class="col-md-12 col-lg-4 mb-4">
+              <div class="card listing-preview">
+                <div class="card-body">
+                  <div class="listing-heading text-center">
+                    <h4 class="text-primary">{{ item.title }}</h4>
+                  </div>
+                  <div class="row text-secondary pb-2">
+                    <div class="col-16 ">
+                      <i class="fas fa-asterisk"></i> {{ item.description }}</div>
+                  </div>
+                  <div class="row text text-secondary">
+                    <div class="col-16">
+                      <i class="fas fa-tag"></i> {{ item.tags }}</div>
+                  </div>
+                  <div class="row text text-secondary">
+                    <div class="col-16">
+                      <i class="fas fa-clock"></i> {{ item.due_date | naturaltime}}</div>
+                  </div>
+                  <hr>
+                  <a href="{% url 'complete_idx' item.id %}" class="btn btn-primary btn-block">Complete</a>
+                </div>
+              </div>
+            </div>
+          
+          {% endfor %}
+
+        {% else %}
+        
+          <div class="col-md-12">
+            <p>No Items Remaining</p>
+          </div>
+        
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+
+  <section id="services" class="py-5 bg-secondary text-white">
+    <div class="container">
+
+      <div class="row text-center">
+        
+        <div class="col-md-4">
+          <i class="fas fa-calendar-check fa-4x mr-4"></i>
+          <hr>
+          <h4>Punctuality</h4>
+          <p>Punctuality is a sign of professionalism and helps you stand out as a reliable and trustworthy employee. If you don't get your part of a project completed on time, you keep others from being able to finish their tasks. Being punctual helps establish your reputation as a dependable and consistent worker.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-sort-amount-up fa-4x mr-4"></i>
+          <hr>
+          <h4>Organization</h4>
+          <p>Organizational skills will help you keep things straight. They make managing your workload, schedule and your files easy. Being organized can also reduce the clutter on your desk so that you can be more productive in your workspace.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-briefcase fa-4x mr-4"></i>
+          <hr>
+          <h4>Productivity</h4>
+          <p>Productivity is a measure of the efficiency of production. High productivity can lead to greater profits for businesses and greater income for individuals. For businesses, productivity growth is important because providing more goods and services to consumers translates to higher profits.</p>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+{% endblock %}
